@@ -5,7 +5,19 @@ blmC <- function(sims, y, X, b0, B0inv, sigma2, c0 = .1, d0 = .1) {
     .Call('learnMCMC_blmC', PACKAGE = 'learnMCMC', sims, y, X, b0, B0inv, sigma2, c0, d0)
 }
 
+bprobitC <- function(sims, y, X, b0, B0inv, beta_start) {
+    .Call('learnMCMC_bprobitC', PACKAGE = 'learnMCMC', sims, y, X, b0, B0inv, beta_start)
+}
+
+simulate <- function(sims, y, xb) {
+    .Call('learnMCMC_simulate', PACKAGE = 'learnMCMC', sims, y, xb)
+}
+
 rtnormInv <- function(lower = -5, upper = 5, mean = 0, sd = 1) {
     .Call('learnMCMC_rtnormInv', PACKAGE = 'learnMCMC', lower, upper, mean, sd)
+}
+
+mvrnormArma <- function(n, mu, sigma) {
+    .Call('learnMCMC_mvrnormArma', PACKAGE = 'learnMCMC', n, mu, sigma)
 }
 

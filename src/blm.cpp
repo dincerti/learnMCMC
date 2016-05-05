@@ -2,14 +2,8 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
+#include "rand.h"
 using namespace Rcpp;
-
-// Simulate from multivariate normal distribution
-arma::mat mvrnormArma(int n, arma::vec mu, arma::mat sigma) {
-  int ncols = sigma.n_cols;
-  arma::mat Y = arma::randn(n, ncols);
-  return arma::repmat(mu, 1, n).t() + Y * arma::chol(sigma);
-}
 
 // [[Rcpp::export]]
 List blmC(int sims, arma::vec y, arma::mat X, arma::vec b0, arma::mat B0inv,

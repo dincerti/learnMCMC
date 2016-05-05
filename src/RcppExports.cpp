@@ -24,6 +24,35 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// bprobitC
+List bprobitC(int sims, arma::vec y, arma::mat X, arma::vec b0, arma::mat B0inv, arma::vec beta_start);
+RcppExport SEXP learnMCMC_bprobitC(SEXP simsSEXP, SEXP ySEXP, SEXP XSEXP, SEXP b0SEXP, SEXP B0invSEXP, SEXP beta_startSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< int >::type sims(simsSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type b0(b0SEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type B0inv(B0invSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type beta_start(beta_startSEXP);
+    __result = Rcpp::wrap(bprobitC(sims, y, X, b0, B0inv, beta_start));
+    return __result;
+END_RCPP
+}
+// simulate
+arma::mat simulate(int sims, arma::vec y, arma::vec xb);
+RcppExport SEXP learnMCMC_simulate(SEXP simsSEXP, SEXP ySEXP, SEXP xbSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< int >::type sims(simsSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type xb(xbSEXP);
+    __result = Rcpp::wrap(simulate(sims, y, xb));
+    return __result;
+END_RCPP
+}
 // rtnormInv
 double rtnormInv(const double lower, const double upper, const double mean, const double sd);
 RcppExport SEXP learnMCMC_rtnormInv(SEXP lowerSEXP, SEXP upperSEXP, SEXP meanSEXP, SEXP sdSEXP) {
@@ -35,6 +64,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const double >::type mean(meanSEXP);
     Rcpp::traits::input_parameter< const double >::type sd(sdSEXP);
     __result = Rcpp::wrap(rtnormInv(lower, upper, mean, sd));
+    return __result;
+END_RCPP
+}
+// mvrnormArma
+arma::mat mvrnormArma(int n, arma::vec mu, arma::mat sigma);
+RcppExport SEXP learnMCMC_mvrnormArma(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type sigma(sigmaSEXP);
+    __result = Rcpp::wrap(mvrnormArma(n, mu, sigma));
     return __result;
 END_RCPP
 }

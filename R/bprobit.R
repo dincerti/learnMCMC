@@ -4,7 +4,8 @@ bprobitR <- function(sims = 1000, x, y, b0, B0inv, beta.start){
   n0 <- sum(y == 0)
   n1 <- sum(y == 1)
   ystar <- rep(0, n)
-  beta.store <- matrix(NA, nrow = sims, ncol = ncol(x))
+  beta.store <- b.store <- matrix(NA, nrow = sims, ncol = ncol(x))
+  ystar.store <- matrix(NA, nrow = length(y), ncol = sims)
   colnames(beta.store) <- colnames(x)
 
   # starting values
@@ -17,7 +18,7 @@ bprobitR <- function(sims = 1000, x, y, b0, B0inv, beta.start){
   for (i in 1:sims){
     # draw ystar
     ystar[y == 0] <- rtnormR(n0, upper = 0, mean = x[y == 0, ] %*% beta)
-    ystar[y==1] <- rtnormR(n1, lower = 0, mean = x[y == 1, ] %*% beta)
+    ystar[y == 1] <- rtnormR(n1, lower = 0, mean = x[y == 1, ] %*% beta)
 
     # draw beta
     b <- B %*% (B0inv %*% b0  + crossprod(x, ystar))
@@ -25,6 +26,9 @@ bprobitR <- function(sims = 1000, x, y, b0, B0inv, beta.start){
 
     # store
     beta.store[i, ] <- beta
+    ystar.store[, i] <- ystar
+    b.store[i, ] <- b
   }
-  return(list(beta = beta.store))
+  return(list(beta = beta.store, ystar = ystar.store,
+              b = b.store))
 }
